@@ -69,14 +69,14 @@ const getChannels = async (): Promise<PostypeChannel[]> => {
 };
 
 const getNewPostId = async (blogId: string): Promise<string> => {
-  const result = await (
+  const result = (await (
     await fetch(
       corsBridge + `https://www.postype.com/api/post/id?blog_id=` + blogId,
       header("GET", {
         "x-requested-with": "XMLHttpRequest",
       })
     )
-  ).json();
+  ).json()) as any;
 
   return result.data.post_id;
 };
@@ -112,12 +112,12 @@ const uploadFile = async (
   );
 
   const result = (
-    await (
+    (await (
       await fetch(
         corsBridge + "https://www.postype.com/api/post/upload",
         header("POST", {}, form)
       )
-    ).json()
+    ).json()) as any
   ).data[0];
 
   return { width: 500, height: 500, ...result, mimetype };
