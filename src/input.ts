@@ -9,6 +9,9 @@ export class StyledInput extends LitElement {
   @property()
   name: string = "";
 
+  @property()
+  type: string = "text";
+
   static styles = css`
     input {
       width: 100%;
@@ -35,6 +38,8 @@ export class StyledInput extends LitElement {
         type="text"
         @input=${this.onChange}
         placeholder=${this.placeholder}
+        type=${this.type}
+        autofocus
       />
     `;
   }

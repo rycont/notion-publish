@@ -18,10 +18,17 @@ export class PostypeLogin extends LitElement {
       background-color: black;
       color: white;
     }
+
+    button:focus {
+      border: 1rem solid #9ce5ff;
+    }
   `;
 
   @state()
   inputContent: Record<string, string> = {};
+
+  @state()
+  isLoading: boolean = false;
 
   firstUpdated() {
     const inputs = [
@@ -29,7 +36,6 @@ export class PostypeLogin extends LitElement {
     ] as HTMLInputElement[];
 
     for (const input of inputs) {
-      console.log(input.name);
       if (input.name)
         input.addEventListener("content-change", (e) => {
           const { detail } = e as CustomEvent<string>;
@@ -42,6 +48,7 @@ export class PostypeLogin extends LitElement {
   }
 
   async login() {
+    this.isLoading = true;
     try {
       await postype.login(this.inputContent.email, this.inputContent.password);
       const channels = await postype.getChannels();
@@ -50,14 +57,22 @@ export class PostypeLogin extends LitElement {
       this.dispatchEvent(new CustomEvent("next-page"));
     } catch (e) {
       alert("로그인에 실패했어요");
+    } finally {
+      this.isLoading = false;
     }
   }
 
   render() {
     return html`
       <styled-input placeholder="이메일" name="email"></styled-input>
-      <styled-input placeholder="비밀번호" name="password"></styled-input>
-      <button @click=${this.login}>가보자고!</button>
+      <styled-input
+        placeholder="비밀번호"
+        type="password"
+        name="password"
+      ></styled-input>
+      <button @click=${this.login} style=${this.isLoading && "opacity: 0.3"}>
+        가보자고!
+      </button>
     `;
   }
 }
