@@ -21,6 +21,9 @@ export class PostypeUpload extends LitElement {
   @state()
   isFin = false;
 
+  @state()
+  openUri = "";
+
   protected async firstUpdated() {
     const pageContent = localStorage.getItem("page");
     const channel: PostypeChannel = JSON.parse(
@@ -76,7 +79,9 @@ export class PostypeUpload extends LitElement {
     await postype.savePost(channel.id, postId, title, dom.body.innerHTML);
 
     alert("업로드 완료! 포스타입의 임시저장한 글에서 확인할 수 있어요");
+
     this.isFin = true;
+    this.openUri = `https://studio.postype.com/${channel.symbol}/posts/drafts`;
 
     window.open(
       `https://studio.postype.com/${channel.symbol}/posts/drafts`,
@@ -88,7 +93,10 @@ export class PostypeUpload extends LitElement {
     return html`
       <p>이미지 ${this.imageAmount}개중 ${this.currentIndex}개 처리함</p>
       ${this.isFin
-        ? html`<p>업로드 완료! 포스타입의 임시저장한 글에 저장됐어요</p>`
+        ? html`<p>
+            업로드 완료! 포스타입의
+            <a href=${this.openUri}>임시저장한 글 목록</a> 에 저장됐어요
+          </p>`
         : ""}
     `;
   }
