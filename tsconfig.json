@@ -17,7 +17,8 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": false,
     "skipLibCheck": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "types": ["@cloudflare/workers-types"]
   },
   "include": ["src/**/*.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
