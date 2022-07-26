@@ -25,7 +25,7 @@ export class PostypeLogin extends LitElement {
   firstUpdated() {
     const inputs = [
       ...(this.shadowRoot?.querySelectorAll("styled-input") || []),
-    ] as HTMLInputElement[];
+    ];
 
     for (const input of inputs) {
       if (input.name)
