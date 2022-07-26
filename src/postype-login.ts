@@ -22,7 +22,12 @@ export class PostypeLogin extends LitElement {
   @state()
   isLoading: boolean = false;
 
-  firstUpdated() {
+  async firstUpdated() {
+    if (await postype.isLoggedin()) {
+      alert("이전에 입력한 정보로 자동 로그인했어요");
+      this.dispatchEvent(new CustomEvent("next-page"));
+    }
+
     const inputs = [
       ...(this.shadowRoot?.querySelectorAll("styled-input") || []),
     ];

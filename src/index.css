@@ -13,8 +13,9 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   flex-direction: column;
-  max-width: 320px;
+  max-width: 420px;
   margin: 0px auto;
+  padding: 12px;
   gap: 12rem;
   word-break: keep-all;
   font-family: SUIT, "SUIT Variable", Pretendard, Pretendard Variable,

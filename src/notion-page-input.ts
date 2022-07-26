@@ -22,7 +22,7 @@ export class NotionPageInput extends LitElement {
         const { html, title } = res as { html: string; title: string };
         const parsed = new DOMParser().parseFromString(html, "text/html");
 
-        console.log(parsed);
+        console.log(parsed.cloneNode(true));
 
         parsed.getElementsByTagName("header")[0].remove();
 
@@ -48,6 +48,62 @@ export class NotionPageInput extends LitElement {
         for (const quote of parsed.querySelectorAll("blockquote")) {
           quote.classList.add("blockquote-type2");
         }
+
+        for (const toggle of parsed.getElementsByTagName("details")) {
+          const summary = toggle.querySelector("summary");
+
+          const ul = document.createElement("ul");
+          if (summary) {
+            const li = document.createElement("li");
+            li.appendChild(
+              document.createTextNode((summary as HTMLElement).innerText)
+            );
+            ul.appendChild(li);
+            summary.remove();
+          }
+
+          toggle.replaceWith(ul);
+
+          for (const child of [
+            ...(toggle.cloneNode(true) as HTMLDetailsElement).children,
+          ]) {
+            console.log(child.tagName);
+            ul.parentNode!.insertBefore(child, ul.nextSibling);
+          }
+        }
+
+        for (const list of parsed.querySelectorAll("ol,ul ol,ul")) {
+          let parent = list.parentElement;
+
+          while (parent) {
+            if (parent.tagName === "UL" || parent.tagName === "OL") {
+              for (const listItem of list.children) {
+                parent.appendChild(listItem);
+              }
+              list.remove();
+              break;
+            } else parent = parent.parentElement;
+          }
+        }
+
+        for (const script of parsed.getElementsByTagName("script")) {
+          script.remove();
+        }
+
+        // for (const code of parsed.querySelectorAll("pre:not(body>pre)")) {
+        //   let parent = code.parentElement;
+        //   console.log(code);
+
+        //   while (parent) {
+        //     console.log(parent.parentElement?.tagName);
+        //     if (parent.parentElement?.tagName === "BODY") {
+        //       console.log("드디어");
+        //       code.remove();
+        //       parsed.body.insertBefore(code, parent.nextSibling);
+        //       break;
+        //     } else parent = parent.parentElement;
+        //   }
+        // }
 
         localStorage.setItem(
           "page",

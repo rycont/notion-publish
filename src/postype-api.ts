@@ -68,6 +68,10 @@ const getChannels = async (): Promise<PostypeChannel[]> => {
   return channels;
 };
 
+const isLoggedin = async () => {
+  return (await getChannels()).length
+};
+
 const getNewPostId = async (blogId: string): Promise<string> => {
   const result = (await (
     await fetch(
@@ -165,4 +169,5 @@ export const postype = {
   getNewPostId,
   savePost,
   uploadFile,
+  isLoggedin
 };
