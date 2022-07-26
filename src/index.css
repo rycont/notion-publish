@@ -22,16 +22,6 @@ body {
     Noto Sans, Nanum Gothic, Apple SD Gothic Neo, sans-serif;
 }
 
-button {
-  font-family: SUIT, "SUIT Variable", Pretendard, Pretendard Variable,
-    Spoqa Han Sans Neo, Spoqa Han Sans, Noto Sans CJK KR, Noto Sans KR,
-    Noto Sans, Nanum Gothic, Apple SD Gothic Neo, sans-serif;
-}
-
 #logo {
   width: 30rem;
-}
-
-input {
-  color: red;
 }

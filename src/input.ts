@@ -12,6 +12,8 @@ export class StyledInput extends LitElement {
   @property()
   type: string = "text";
 
+  value: string = "";
+
   static styles = css`
     input {
       width: 100%;
@@ -25,6 +27,8 @@ export class StyledInput extends LitElement {
 
   onChange(e: KeyboardEvent) {
     const { value } = e.target as HTMLInputElement;
+    this.value = value;
+
     this.dispatchEvent(
       new CustomEvent("content-change", {
         detail: value,
@@ -42,5 +46,11 @@ export class StyledInput extends LitElement {
         autofocus
       />
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "styled-input": StyledInput;
   }
 }

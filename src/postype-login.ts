@@ -1,28 +1,20 @@
 import { css, html, LitElement } from "lit";
 import { customElement, state } from "lit/decorators.js";
+import { button } from "./button";
 import { postype } from "./postype-api";
 
 @customElement("postype-login")
 export class PostypeLogin extends LitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    button {
-      width: 100%;
-      padding: 2rem;
-      border-radius: 2rem;
-      background-color: black;
-      color: white;
-    }
-
-    button:focus {
-      border: 1rem solid #9ce5ff;
-    }
-  `;
+  static styles = [
+    button,
+    css`
+      :host {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+    `,
+  ];
 
   @state()
   inputContent: Record<string, string> = {};

@@ -95,7 +95,7 @@ export class PostypeUpload extends LitElement {
       ${this.isFin
         ? html`<p>
             업로드 완료! 포스타입의
-            <a href=${this.openUri}>임시저장한 글 목록</a> 에 저장됐어요
+            <a href=${this.openUri}>임시저장한 글 목록</a>에 저장됐어요
           </p>`
         : ""}
     `;
