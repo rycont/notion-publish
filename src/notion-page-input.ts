@@ -90,20 +90,20 @@ export class NotionPageInput extends LitElement {
           script.remove();
         }
 
-        // for (const code of parsed.querySelectorAll("pre:not(body>pre)")) {
-        //   let parent = code.parentElement;
-        //   console.log(code);
+        for (const pre of parsed.getElementsByTagName("pre")) {
+          const content = `
+           <div class="element-editor-container code" contenteditable="false">
+             <pre data-type="text/x-python">
+              ${pre.innerText}
+             </pre>
+           </div>
+          `;
 
-        //   while (parent) {
-        //     console.log(parent.parentElement?.tagName);
-        //     if (parent.parentElement?.tagName === "BODY") {
-        //       console.log("드디어");
-        //       code.remove();
-        //       parsed.body.insertBefore(code, parent.nextSibling);
-        //       break;
-        //     } else parent = parent.parentElement;
-        //   }
-        // }
+          const div = document.createElement("div");
+          div.innerHTML = content;
+
+          pre.replaceWith(div.children[0]);
+        }
 
         localStorage.setItem(
           "page",
