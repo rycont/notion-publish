@@ -53,11 +53,9 @@ export class MyElement extends LitElement {
   `;
 
   updated(changedProperties: Map<string, any>) {
-    console.log(changedProperties);
 
     for (const page of this.shadowRoot?.querySelectorAll("[page]") || []) {
       page.addEventListener("next-page", (() => {
-        console.log("담페");
         this.page++;
       }) as EventListener);
     }
@@ -68,8 +66,8 @@ export class MyElement extends LitElement {
 
   render() {
     return html`<h1>${pages[this.page].label}</h1>
-      ${pages[this.page].element}
-      ${pages[this.page].description?.map((e) => html`<p>${e}</p>`)} `;
+${pages[this.page].element}
+${pages[this.page].description?.map((e) => html`<p>${e}</p>`)}`;
   }
 }
 

@@ -22,8 +22,6 @@ export class NotionPageInput extends LitElement {
         const { html, title } = res as { html: string; title: string };
         const parsed = new DOMParser().parseFromString(html, "text/html");
 
-        console.log(parsed.cloneNode(true));
-
         parsed.getElementsByTagName("header")[0].remove();
 
         const imageContainers = parsed.querySelectorAll("figure.image");
@@ -67,7 +65,6 @@ export class NotionPageInput extends LitElement {
           for (const child of [
             ...(toggle.cloneNode(true) as HTMLDetailsElement).children,
           ]) {
-            console.log(child.tagName);
             ul.parentNode!.insertBefore(child, ul.nextSibling);
           }
         }
@@ -114,7 +111,6 @@ export class NotionPageInput extends LitElement {
         this.dispatchEvent(new CustomEvent("next-page"));
       })
       .catch((e) => {
-        console.log(e);
         alert(
           "노션 페이지를 불러올 수 없어요. 페이지 주소가 올바른지, 퍼블릭으로 설정되어있는지 확인해주세요."
         );

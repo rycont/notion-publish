@@ -1,3 +1,4 @@
+import { Canvg } from "canvg";
 import { PostypeChannel } from "./types";
 
 let token: string | undefined =
@@ -106,9 +107,36 @@ const uploadFile = async (
   const form = new FormData();
   form.set("post_id", postId);
 
-  const res = await (await fetch(fileB64)).arrayBuffer();
+  const response = (await fetch(fileB64))
 
-  const mimetype = fileB64.split(";")[0].split(":")[1];
+  let res: ArrayBuffer | null = null
+  let mimetype = fileB64.split(";")[0].split(":")[1];
+
+  if (response.headers.get("content-type")?.includes("svg")) {
+    const text = await response.text()
+    const canvas = new OffscreenCanvas(
+      1000,
+      1000
+    )
+    const rendered = Canvg.fromString(
+      canvas.getContext("2d")!, text)
+    rendered.start();
+
+    res = await (await fetch(
+      URL.createObjectURL(
+        new Blob([
+          await (
+            await canvas.convertToBlob({ type: "image/png" })
+          ).arrayBuffer()
+        ], {
+          type: "image/png"
+        })
+      )
+    )).arrayBuffer()
+    mimetype = "image/png"
+  } else {
+    res = await response.arrayBuffer()
+  }
   form.set(
     "file",
     new Blob([res], { type: mimetype }),
