@@ -110,7 +110,7 @@ export class NotionPageInput extends LitElement {
 
         this.dispatchEvent(new CustomEvent("next-page"));
       })
-      .catch((e) => {
+      .catch(() => {
         alert(
           "노션 페이지를 불러올 수 없어요. 페이지 주소가 올바른지, 퍼블릭으로 설정되어있는지 확인해주세요."
         );
