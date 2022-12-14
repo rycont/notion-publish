@@ -52,8 +52,7 @@ export class MyElement extends LitElement {
     }
   `;
 
-  updated(changedProperties: Map<string, any>) {
-
+  updated() {
     for (const page of this.shadowRoot?.querySelectorAll("[page]") || []) {
       page.addEventListener("next-page", (() => {
         this.page++;
